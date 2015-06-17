@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('cvTemplate', ['ui.bootstrap']);
+angular.module('joebloggs', []);
