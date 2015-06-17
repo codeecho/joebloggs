@@ -1,9 +1,11 @@
+require('dotenv').load();
+
 module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    clean: ["dist/*"],
+    clean: ["dist/*", "target"],
     copy: {
       dist: {
         files: [{
@@ -11,7 +13,7 @@ module.exports = function(grunt) {
           cwd: 'src',
           src: ['index.html', 'assets/**/*'],
           dest: 'dist'
-        },{
+        }, {
           expand: true,
           cwd: 'bower_components/bootstrap/dist',
           src: ['fonts/**/*'],
@@ -44,6 +46,32 @@ module.exports = function(grunt) {
         }
       }
     },
+    compress: {
+      dist: {
+        options: {
+          mode: "tgz",
+          archive: "target/joebloggs.tar.gz"
+        },
+        files: [{
+          expand: true,
+          src: ['**/*'],
+          cwd: "dist",
+          dest: '',
+        }]
+      }
+    },
+    "github-release": {
+      options: {
+        repository: 'codeecho/joebloggs',
+        auth: {
+          user: 'codeecho',
+          password: process.env.GITHUB_PASSWORD
+        }
+      },
+      files: {
+        src: ['target/joebloggs.tar.gz']
+      }
+    },
     connect: {
       server: {
         options: {
@@ -60,8 +88,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-github-releaser');
 
   grunt.registerTask('build', ['clean', 'copy', 'concat']);
+  grunt.registerTask('dist', ['build', 'compress']);
+  grunt.registerTask('release', ['dist', 'github-release']);
 
   grunt.registerTask('serve', ['build', 'connect']);
 
