@@ -1,0 +1,121 @@
+<!doctype html>
+<html ng-app="joebloggs">
+  <head>
+    <meta charset="utf-8">
+    <title>CV</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/vendor.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.css" type="text/css"/>
+    <script type="text/javascript" src="js/vendor.js"> </script>
+    <script type="text/javascript" src="js/app.js"> </script>
+  </head>
+  <body>
+
+    <div class="container" ng-controller="MainCtrl">
+      <div class="row">
+        <div class="col-xs-12 col-md-offset-1 col-md-10 container" id="cv-container">
+          <div class="hidden-xs hidden-sm col-md-4">
+            <img id="avatar" src="{{cv.avatar}}" alt="Avatar" class="img-circle" width="200px"/>
+          </div>
+          <div class="col-xs-12 col-md-8">
+            <h1>{{cv.firstName}} {{cv.surname}} <small>{{cv.title}}</small></h1>
+            <p id="intro">{{cv.introduction}}</p>
+          </div>
+          <div class="col-xs-12 col-md-10 col-md-offset-2">
+            <h2>Profile</h2>
+          </div>
+          <div class="hidden-xs hidden-sm col-md-2">
+            <div class="icon-wrapper">
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-10">
+            <table class="table table-striped">
+              <tr>
+                <th>Full Name</th>
+                <td>{{cv.firstName}} {{cv.surname}}</td>
+              </tr>
+              <tr>
+                <th>Date Of Birth</th>
+                <td>{{cv.dob}}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{cv.email}}</td>
+              </tr>
+              <tr ng-if="cv.website">
+                <th>Website</th>
+                <td><a target="_blank" href="{{cv.website}}">{{cv.website}}</a></td>
+              </tr>
+              <tr ng-if="cv.links">
+                <th>Find Me On</th>
+                <td>
+                  <a ng-repeat="(type, link) in cv.links" href="{{link}}"><img src="../assets/images/socialmedia/{{type}}.png"/></a>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-xs-12 col-md-10 col-md-offset-2">
+            <h2>Qualifications</h2>
+          </div>
+          <div ng-repeat="qualification in cv.qualifications">
+            <div class="hidden-xs hidden-sm col-md-2">
+              <div class="icon-wrapper">
+                <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-10">
+              <h3>{{qualification.title}} <small>{{qualification.date}}</h3>
+              <h4>{{qualification.location}}</h4>
+              <p>{{qualification.description}}</p>
+           </div>
+          </div>
+          <div class="col-xs-12 col-md-10 col-md-offset-2">
+            <h2>Work Experience</h2>
+          </div>
+          <div ng-repeat="job in cv.work">
+            <div class="hidden-xs hidden-sm col-md-2">
+              <div class="icon-wrapper">
+                <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-10">
+              <h3>{{job.company}} <small>{{job.date}}</small></h3>
+              <h4>{{job.title}}</h4>
+              <p>{{job.description}}</p>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-10 col-md-offset-2">
+            <h2>Skills</h2>
+          </div>
+          <div class="hidden-xs hidden-sm col-md-2">
+            <div class="icon-wrapper">
+              <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-10">
+            <div ng-repeat="(skill, level) in cv.skills" class="col-xs-12 col-md-12">
+              <div class="progress">
+                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{level}}" aria-valuemin="0" aria-valuemax="100" style="width: {{level}}%"><span class="skill">{{skill}}</span></div>
+                <span class="skill-level">{{level}}%</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-10 col-md-offset-2">
+            <h2>Hobbies & Interests</h2>
+          </div>
+          <div class="hidden-xs hidden-sm col-md-2">
+            <div class="icon-wrapper">
+              <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-10">
+            <p>{{cv.interests}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
